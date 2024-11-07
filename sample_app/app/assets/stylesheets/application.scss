@@ -10,9 +10,10 @@
  */
 
  @import "~bootstrap/scss/bootstrap";
+ @import 'custom';
 
 /* universal */
-body {
+/*body {
     padding-top: 60px;
 }
 
@@ -33,6 +34,7 @@ textarea {
 }
 
 /* typography */
+/*
 h1,
 h2,
 h3,
@@ -64,6 +66,7 @@ p {
 }
 
 /*header */
+/*
 #logo {
     float: left;
     margin-right: 10px;
