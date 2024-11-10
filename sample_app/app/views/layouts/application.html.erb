@@ -9,15 +9,22 @@
   <body>
     <!-- Navbar -->
     <%= render 'layouts/header' %>
-
+    <!-- Flash Messages -->
+    <div class="container mt-3">
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
     <!-- Main Content -->
     <div class="container mt-5">
       <%= yield %>
+      <!-- Debug Output (only visible in development) -->
+      <%= debug(@user) if Rails.env.development? %>
     </div>
-
     <!-- Footer -->
     <%= render 'layouts/footer' %>
-
     <%= javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true %>
   </body>
 </html>

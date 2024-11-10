@@ -2,80 +2,162 @@
 
 /* Universal */
 body {
-  padding-top: 60px;
+    padding-top: 60px;
 }
+
+/* Add styling to user sign up form */
+input, textarea, select, .uneditable-input {
+    border: 1px solid #bbb;
+    width: 100%;
+    margin-bottom: 15px;
+    @include box_sizing;
+}
+ 
+/* Add styling for error messages */
+/* app/assets/stylesheets/custom.scss */
+#error_explanation {
+    color: red;
+    ul {
+        color: red;
+        margin: 0 0 30px 0;
+    }
+}
+  
+  .field_with_errors {
+    @extend .has-error;
+    .form-control {
+      color: $state-danger-text;
+    }
+  }
 
 /* Jumbotron Styling */
 .jumbotron {
-  background-color: #f8f9fa;
-  border-radius: 0.3rem;
-  margin-bottom: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 0.3rem;
+    margin-bottom: 2rem;
 }
 
 .jumbotron h1 {
-  font-size: 2.5rem; /* Adjusted font size */
-  font-weight: 300;
-  letter-spacing: -1px;
-  margin-bottom: 15px; /* Space below title */
+    font-size: 2.5rem;
+    /* Adjusted font size */
+    font-weight: 300;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+    /* Space below title */
 }
 
 .jumbotron p.lead {
-  font-size: 1.25rem; /* Smaller font size */
-  color: #6c757d;
-  margin-bottom: 20px; /* Space below subtitle */
+    font-size: 1.25rem;
+    /* Smaller font size */
+    color: #6c757d;
+    margin-bottom: 20px;
+    /* Space below subtitle */
 }
 
 .jumbotron .btn-primary {
-  font-size: 1.25rem;
-  padding: 10px 20px;
+    font-size: 1.25rem;
+    padding: 10px 20px;
 }
 
 /* Navbar Styling */
 #logo {
-  font-size: 1.5rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #fff;
-  letter-spacing: -1px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: -1px;
 }
 
 #logo:hover {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .navbar-nav .nav-item .nav-link {
-  color: #ffffff;
-  font-weight: 500;
+    color: #ffffff;
+    font-weight: 500;
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-  color: #dcdcdc;
+    color: #dcdcdc;
 }
 
 /* Footer Styling */
 .footer {
-  margin-top: 40px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: #f8f9fa;
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #f8f9fa;
 }
 
 .footer p {
-  color: #777;
-  font-size: 0.9rem;
+    color: #777;
+    font-size: 0.9rem;
 }
 
 .footer .list-inline-item {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 
 .footer .list-inline-item a {
-  color: #777;
-  text-decoration: none;
+    color: #777;
+    text-decoration: none;
 }
 
 .footer .list-inline-item a:hover {
-  color: #333;
-  text-decoration: underline;
+    color: #333;
+    text-decoration: underline;
+}
+
+/* microposts */
+.microposts {
+    list-style: none;
+    padding: 0;
+
+    li {
+        padding: 10px 0;
+        border-top: 1px solid #e8e8e8;
+    }
+
+    .user {
+        margin-top: 5em;
+        padding-top: 0;
+    }
+
+    .content {
+        display: block;
+        margin-left: 60px;
+
+        img {
+            display: block;
+            padding: 5px 0;
+        }
+    }
+
+    .timestamp {
+        color: $gray-light;
+        display: block;
+        margin-left: 60px;
+    }
+
+    .gravatar {
+        float: left;
+        margin-right: 10px;
+        margin-top: 5px;
+    }
+}
+
+aside {
+    textarea {
+        height: 100px;
+        margin-bottom: 5px;
+    }
+}
+
+span.image {
+    margin-top: 10px;
+
+    input {
+        border: 0;
+    }
 }

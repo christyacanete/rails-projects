@@ -20,5 +20,12 @@ class User < ApplicationRecord
   # Secure password handling (requires bcrypt gem and password_digest column)
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+
+  has_many :microposts
+
+  # Returns a user's status feed.
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
   
 end

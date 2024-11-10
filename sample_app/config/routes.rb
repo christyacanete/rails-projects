@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resources :users
+  resources :microposts, only: [:create, :destroy]
+
   get '/signup', to: 'users#new'
   get '/help', to: 'static_pages#help'
   get '/about', to: 'static_pages#about'
