@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :remember_token  # Temporary token attribute for session management
 
   before_save { self.email = email.downcase }
 
@@ -27,5 +28,27 @@ class User < ApplicationRecord
   def feed
     Micropost.where("user_id = ?", id)
   end
-  
+
+  # Class method to generate a random token
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # Class method to return the hash digest of a given string
+  def self.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
+  # Instance method to remember a user for persistent sessions
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  # Instance method to verify if the given token matches the digest
+  def authenticated?(remember_token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
 end

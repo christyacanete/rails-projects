@@ -6,29 +6,34 @@ body {
 }
 
 /* Add styling to user sign up form */
-input, textarea, select, .uneditable-input {
+input,
+textarea,
+select,
+.uneditable-input {
     border: 1px solid #bbb;
     width: 100%;
     margin-bottom: 15px;
     @include box_sizing;
 }
- 
+
 /* Add styling for error messages */
 /* app/assets/stylesheets/custom.scss */
 #error_explanation {
     color: red;
+
     ul {
         color: red;
         margin: 0 0 30px 0;
     }
 }
-  
-  .field_with_errors {
+
+.field_with_errors {
     @extend .has-error;
+
     .form-control {
-      color: $state-danger-text;
+        color: $state-danger-text;
     }
-  }
+}
 
 /* Jumbotron Styling */
 .jumbotron {
@@ -160,4 +165,20 @@ span.image {
     input {
         border: 0;
     }
+}
+
+/* Add styling to "Remember Me" checkbox */
+.checkbox {
+    margin-top: -10px;
+    margin-bottom: 10px;
+
+    span {
+        margin-left: 20px;
+        font-weight: normal;
+    }
+}
+
+#session_remember_me {
+    width: auto;
+    margin-left: 0;
 }
