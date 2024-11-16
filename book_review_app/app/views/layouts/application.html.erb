@@ -7,24 +7,37 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
-
   <body>
     <%= render 'layouts/header' %>
+
+    <%# Flash message styling %>
+    <div class="container mt-3">
+      <% flash.each do |message_type, message| %>
+        <%# Map Rails flash types to Bootstrap classes %>
+        <% bootstrap_class = case message_type.to_sym
+           when :notice then 'alert-success'
+           when :alert then 'alert-warning'
+           when :error then 'alert-danger'
+           else 'alert-info'
+           end %>
+        <div class="alert <%= bootstrap_class %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>

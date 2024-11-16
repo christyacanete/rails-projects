@@ -1,0 +1,24 @@
+<h1>Edit Profile</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this profile from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@user, html: { multipart: true }) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  <%= f.label :password %> (leave blank if not changing)
+  <%= f.password_field :password %>
+  <%= f.label :password_confirmation %> (leave blank if not changing)
+  <%= f.password_field :password_confirmation %>
+  <%= f.label :profile_picture %>
+  <%= f.file_field :profile_picture %>
+  <%= f.submit "Save Changes", class: "btn btn-primary" %>
+<% end %>

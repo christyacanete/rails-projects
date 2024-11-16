@@ -1,0 +1,75 @@
+<%# Display book information %>
+<h1 class="mb-4"><%= @book.title %></h1>
+
+<% if @book.cover_image.attached? %>
+  <%= image_tag(
+        Rails.application.routes.url_helpers.rails_representation_url(
+          @book.cover_image.variant(resize_to_limit: [200, 330]), 
+          only_path: true
+        ), class: "mb-4 rounded shadow"
+      ) %>
+<% else %>
+  <p>No cover image attached.</p>
+<% end %>
+
+<p><strong>Author:</strong> <%= @book.author %></p>
+
+<%# Display average rating and review count %>
+<% if @book.reviews.any? %>
+  <p><strong>Average Rating:</strong> <%= @book.average_rating || "No ratings yet" %> / 5</p>
+  <p><strong>Total Reviews:</strong> <%= @book.reviews.count %></p>
+<% else %>
+  <p>No reviews yet for this book.</p>
+<% end %>
+
+<hr class="my-4">
+
+<h2>Reviews</h2>
+<% if @reviews.present? && @reviews.any? %>
+  <% @reviews.each do |review| %>
+    <div class="review p-3 mb-3 border rounded shadow-sm">
+      <p><strong>Reviewer:</strong> <%= review.user.name %></p>
+      <p><strong>Rating:</strong> <%= review.rating %> / 5</p>
+      <p><strong>Comment:</strong> <%= review.content %></p>
+
+      <% if review.user == current_user %>
+        <%= link_to "Edit", edit_book_review_path(@book, review), class: "btn btn-secondary btn-sm mr-2" %>
+        <%= link_to "Delete", book_review_path(@book, review), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No reviews yet for this book.</p>
+<% end %>
+
+<hr class="my-4">
+
+<%# Review form for logged-in users %>
+<% if logged_in? %>
+  <h3>Add Your Review</h3>
+
+  <% if @review.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h4>
+      <ul>
+        <% @review.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <%= form_with(model: [@book, @book.reviews.build], local: true) do |f| %>
+    <div class="form-group">
+      <%= f.label :rating, "Rating (1-5)" %>
+      <%= f.number_field :rating, in: 1..5, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :content, "Review" %>
+      <%= f.text_area :content, class: "form-control" %>
+    </div>
+    <%= f.submit "Submit Review", class: "btn btn-primary mt-2" %>
+  <% end %>
+<% else %>
+  <p>Please <%= link_to "log in", login_path %> to add a review.</p>
+<% end %>

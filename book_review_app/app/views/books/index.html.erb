@@ -1,0 +1,44 @@
+<h1>All Books</h1>
+
+<%# Search form where users can enter a keyword %>
+<%= form_with url: books_path, method: :get, local: true do %>
+  <div class="form-group mb-3">
+    <%= label_tag :query, "Search for a book:" %>
+    <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Enter title or author" %>
+  </div>
+  <%= submit_tag "Search", class: "btn btn-primary mb-4" %>
+<% end %>
+
+<%# Search and display books based on query %>
+<% if @books.any? %>
+  <div class="container">
+    <div class="row">
+      <% @books.each do |book| %>
+        <div class="col-md-4 col-lg-3 mb-4">
+          <div class="card book-item h-100 shadow-sm">
+            <% if book.cover_image.attached? %>
+              <%= image_tag(
+                Rails.application.routes.url_helpers.rails_representation_url(
+                  book.cover_image.variant(resize_to_limit: [200, 300]), 
+                  only_path: true
+                ), class: "card-img-top"
+              ) %>
+            <% else %>
+              <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 300px;">
+                <p>No cover image available</p>
+              </div>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
+              <p class="card-text">Author: <%= book.author %></p>
+              <p class="card-text"><strong>Average Rating:</strong> <%= book.average_rating || "N/A" %> / 5</p>
+              <p class="card-text"><strong>Total Reviews:</strong> <%= book.reviews.count %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <p>No books found for your search.</p>
+<% end %>

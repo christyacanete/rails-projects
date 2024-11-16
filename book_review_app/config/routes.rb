@@ -1,12 +1,21 @@
 Rails.application.routes.draw do
-  resources :users
-  
+  # Users routes
+  resources :users, only: [:new, :create, :show, :edit, :update]
   get "/signup", to: "users#new"
- 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+
+  # Books routes with nested reviews
+  resources :books, only: [:show, :index] do
+    resources :reviews, only: [:new, :create, :edit, :update, :destroy] # Adjust actions as needed
+  end
+
+  # Session routes for log in and log out
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
+  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
+  # Root path
   root "static_pages#home"
 end

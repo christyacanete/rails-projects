@@ -1,0 +1,13 @@
+<h1><%= @user.name %></h1>
+<% if @user.profile_picture.attached? %>
+  <%= image_tag(
+        Rails.application.routes.url_helpers.rails_representation_url(
+          @user.profile_picture.variant(resize_to_limit: [300, 300]), 
+          only_path: true
+        )
+      ) %>
+<% else %>
+  <p>No profile picture uploaded</p>
+<% end %>
+<p>Email: <%= @user.email %></p>
+<%= link_to "Edit Profile", edit_user_path(current_user), class: "btn btn-secondary" %>
