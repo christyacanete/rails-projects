@@ -1,0 +1,47 @@
+<%= render 'layouts/header' %>
+<div class="reservations-container">
+  <div id="flash_messages">
+    <%= render "layouts/flash_messages" %>
+  </div>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Reservation List Section -->
+      <div class="col-md-12" id="reservation_list">
+        <h2 class="text-center">Your Reservations</h2>
+        <% if @reservations.any? %>
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Number of People</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @reservations.each do |reservation| %>
+                <tr>
+                  <td><%= reservation.time_slot.date %></td>
+                  <td>
+                    <%= reservation.time_slot.start_time.strftime("%I:%M %p") %> - 
+                    <%= reservation.time_slot.end_time.strftime("%I:%M %p") %>
+                  </td>
+                  <td><%= reservation.number_of_people %></td>
+                  <td>
+                    <%= button_to "Cancel", reservation_path(reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-center text-muted">You have no reservations.</p>
+        <% end %>
+      </div>
+      <!-- Button to Reservation Form -->
+      <div class="text-center mt-4">
+        <%= link_to "Make a Reservation", new_reservation_path, class: "btn btn-dark btn-lg" %>
+      </div>
+    </div>
+  </div>
+</div>

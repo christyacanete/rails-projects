@@ -1,0 +1,37 @@
+<%= render 'layouts/header' %>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Time Slots</h1>
+  <!-- Add Time Slot Button -->
+  <div class="d-flex justify-content-end mb-3">
+    <%= link_to "Add Time Slot", new_admin_time_slot_path, class: "btn btn-dark btn-lg" %>
+  </div>
+  <% if @time_slots.any? %>
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Max Tables</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @time_slots.each do |slot| %>
+          <tr>
+            <td><%= slot.date.strftime("%b %d, %Y") %></td>
+            <td><%= slot.start_time.strftime("%I:%M %p") %> - <%= slot.end_time.strftime("%I:%M %p") %></td>
+            <td><%= slot.max_tables %></td>
+            <td>
+              <div class="d-flex gap-2">
+                <%= link_to "Edit", edit_admin_time_slot_path(slot), class: "btn btn-warning btn-sm" %>
+                <%= button_to "Delete", admin_time_slot_path(slot), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-center text-muted">No time slots available.</p>
+  <% end %>
+</div>

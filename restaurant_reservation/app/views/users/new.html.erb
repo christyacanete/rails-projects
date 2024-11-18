@@ -1,0 +1,52 @@
+<div class="cover-photo">
+  <%= image_tag "background.jpg", alt: "Cover Photo", class: "img-fluid w-100" %>
+  <div class="login-form-container">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="card p-4 shadow-lg" style="width: 24rem;">
+        <h2 class="text-center mb-4">Sign Up</h2>
+        
+        <!-- Display Validation Errors -->
+        <% if @user.errors.any? %>
+          <div class="alert alert-danger">
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        
+        <%= form_with model: @user, url: users_path, local: true do |form| %>
+          <!-- Name Field -->
+          <div class="mb-3">
+            <%= form.label :name, "Full Name", class: "form-label" %>
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-3">
+            <%= form.label :email, "Email Address", class: "form-label" %>
+            <%= form.email_field :email, class: "form-control" %>
+          </div>
+
+          <!-- Password Field -->
+          <div class="mb-3">
+            <%= form.label :password, "Password", class: "form-label" %>
+            <%= form.password_field :password, class: "form-control" %>
+          </div>
+
+          <!-- Password Confirmation Field -->
+          <div class="mb-3">
+            <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
+            <%= form.password_field :password_confirmation, class: "form-control" %>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-grid">
+            <%= form.submit "Sign Up", class: "btn btn-elegant btn-lg mt-3" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

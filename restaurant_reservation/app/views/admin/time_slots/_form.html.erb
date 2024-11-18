@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center">
+  <div class="w-100" style="max-width: 500px;">
+    <%= form_with model: @time_slot, url: @time_slot.new_record? ? admin_time_slots_path : admin_time_slot_path(@time_slot), local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :date, "Date", class: "form-label" %>
+        <%= form.date_field :date, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :start_time, "Start Time", class: "form-label" %>
+        <%= form.time_field :start_time, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :end_time, "End Time", class: "form-label" %>
+        <%= form.time_field :end_time, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :max_tables, "Max Tables", class: "form-label" %>
+        <%= form.number_field :max_tables, class: "form-control", min: 1 %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :max_people, "Maximum People per Reservation", class: "form-label" %>
+        <%= form.number_field :max_people, class: "form-control", min: 1 %>
+      </div>
+      <div class="d-flex justify-content-center">
+        <%= form.submit @time_slot.new_record? ? "Create Time Slot" : "Update Time Slot", class: "btn btn-dark btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div>

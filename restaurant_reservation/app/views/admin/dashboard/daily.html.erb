@@ -1,0 +1,36 @@
+<%= render 'layouts/header' %>
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Daily Reservations</h1>
+
+  <% if @reservations.any? %>
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>User</th>
+          <th>Time</th>
+          <th>Number of People</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reservations.each do |reservation| %>
+          <tr>
+            <td><%= reservation.user.name %></td>
+            <td><%= reservation.time_slot.start_time.strftime("%I:%M %p") %> - <%= reservation.time_slot.end_time.strftime("%I:%M %p") %></td>
+            <td><%= reservation.number_of_people %></td>
+            <td>
+              <%= button_to "Cancel", reservation_path(reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-dark btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-center text-muted">No reservations for today.</p>
+  <% end %>
+
+  <div class="text-center mt-4">
+    <%= link_to "Back to Dashboard", admin_dashboard_path, class: "btn btn-dark btn-lg" %>
+  </div>
+</div>

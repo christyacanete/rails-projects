@@ -1,0 +1,48 @@
+<%= render 'layouts/header' %>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Reservation Calendar</h1>
+  <% if @time_slots.any? %>
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Time Slot</th>
+          <th>Reservations</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @time_slots.each do |slot| %>
+          <tr>
+            <!-- Date -->
+            <td><%= slot.date.strftime("%b %d, %Y") %></td>
+            <!-- Time Slot -->
+            <td><%= slot.start_time.strftime("%I:%M %p") %> - <%= slot.end_time.strftime("%I:%M %p") %></td>
+            <!-- Reservations -->
+            <td>
+              <% if slot.reservations.any? %>
+                <ul class="list-unstyled">
+                  <% slot.reservations.each do |reservation| %>
+                    <li>
+                      <strong><%= reservation.user.name %></strong> - <%= reservation.number_of_people %> people
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p class="text-muted">No reservations</p>
+              <% end %>
+            </td>
+            <!-- Status -->
+            <td>
+              <span class="badge <%= slot.reservations.count >= slot.max_tables ? 'bg-danger' : 'bg-success' %>">
+                <%= slot.reservations.count >= slot.max_tables ? "Fully Booked" : "Available" %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-center text-muted">No time slots available.</p>
+  <% end %>
+</div>

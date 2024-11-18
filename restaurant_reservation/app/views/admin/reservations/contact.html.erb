@@ -1,0 +1,38 @@
+<%= render 'layouts/header' %>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1 class="text-center mb-4">Contact Customer</h1>
+      <!-- Reservation Details -->
+      <p class="lead">Reservation Details:</p>
+      <ul class="list-group mb-4">
+        <li class="list-group-item">
+          <strong>Customer Name:</strong> <%= @reservation.user.name %>
+        </li>
+        <li class="list-group-item">
+          <strong>Email:</strong> <%= @reservation.user.email %>
+        </li>
+        <li class="list-group-item">
+          <strong>Reservation Date:</strong> <%= @reservation.time_slot.date.strftime("%b %d, %Y") %>
+        </li>
+        <li class="list-group-item">
+          <strong>Time:</strong> <%= @reservation.time_slot.start_time.strftime("%I:%M %p") %> - <%= @reservation.time_slot.end_time.strftime("%I:%M %p") %>
+        </li>
+        <li class="list-group-item">
+          <strong>Number of People:</strong> <%= @reservation.number_of_people %>
+        </li>
+      </ul>
+      <!-- Message Form -->
+      <%= form_with url: send_message_admin_reservation_path(@reservation), method: :post, local: true do |form| %>
+        <div class="mb-3">
+          <%= form.label :message, "Message to Customer", class: "form-label" %>
+          <%= form.text_area :message, class: "form-control", rows: 5, placeholder: "Type your message here..." %>
+        </div>
+        <div class="d-flex justify-content-between">
+          <%= link_to "Back to Dashboard", admin_dashboard_path, class: "btn btn-secondary btn-lg" %>
+          <%= form.submit "Send Email", class: "btn btn-dark btn-lg" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

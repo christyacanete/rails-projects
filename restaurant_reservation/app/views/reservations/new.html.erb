@@ -1,0 +1,28 @@
+<%= render 'layouts/header' %>
+<% if @reservation.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger shadow-lg">
+    <ul>
+      <% @reservation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Make a Reservation</h1>
+  <div class="card shadow-sm p-4 w-100" style="max-width: 600px; margin: 0 auto;">
+    <%= form_with model: @reservation, url: reservations_path, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :time_slot_id, "Select a Time Slot", class: "form-label" %>
+        <%= form.collection_select :time_slot_id, TimeSlot.available_slots, :id, :display_time, prompt: "Choose a time slot", class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :number_of_people, "Number of People", class: "form-label" %>
+        <%= form.number_field :number_of_people, class: "form-control", min: 1 %>
+      </div>
+      <div class="d-flex justify-content-center">
+        <%= form.submit "Reserve Now", class: "btn btn-dark btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div>

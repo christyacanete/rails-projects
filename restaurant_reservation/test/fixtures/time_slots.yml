@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2024-11-17
+  start_time: 2024-11-17 00:47:00
+  end_time: 2024-11-17 00:47:00
+  max_tables: 1
+
+two:
+  date: 2024-11-17
+  start_time: 2024-11-17 00:47:00
+  end_time: 2024-11-17 00:47:00
+  max_tables: 1

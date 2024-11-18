@@ -1,2 +1,11 @@
-<h1>Welcome to the Restaurant Reservation System!</h1>
-<p>Your one-stop solution for booking tables at your favorite restaurant.</p>
+<div class="cover-photo">
+  <%= image_tag "background.jpg", alt: "Cover Photo", class: "img-fluid w-100" %>
+  <div class="cover-text">
+    <h1>Welcome to La Vie Parisienne</h1>
+    <p>Indulge in the art of fine dining. Reserve your table and savor a culinary journey crafted to perfection.</p>
+     <%= link_to(logged_in? ? new_reservation_path : login_path, class: "btn btn-elegant btn-lg mt-3") do %>
+        Reserve Now
+     <% end %>
+  </div>
+</div>
+

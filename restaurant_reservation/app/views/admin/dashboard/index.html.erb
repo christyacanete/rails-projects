@@ -1,0 +1,97 @@
+<%= render 'layouts/header' %>
+<div class="admin-container">
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+    <!-- Navigation Links -->
+    <div class="text-center mb-4">
+      <%= link_to "Daily Reservations", admin_dashboard_daily_path, class: "btn btn-dark me-2" %>
+      <%= link_to "Weekly Reservations", admin_dashboard_weekly_path, class: "btn btn-dark me-2" %>
+      <%= link_to "Monthly Reservations", admin_dashboard_monthly_path, class: "btn btn-dark" %>
+    </div>
+    <!-- Summary Section -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Total Reservations</h5>
+            <p class="card-text display-4 text-center"><%= @total_reservations %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Fully Booked Slots</h5>
+            <p class="card-text display-4 text-center"><%= @fully_booked_slots.size %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Available Tables</h5>
+            <p class="card-text display-4 text-center"><%= @available_tables %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Filter Form -->
+    <div class="mb-4">
+      <%= form_with url: admin_dashboard_path, method: :get, local: true do |form| %>
+        <div class="row g-2">
+          <div class="col-auto">
+            <%= form.label :date, "Filter by Date", class: "form-label" %>
+            <%= form.date_field :date, value: params[:date], class: "form-control" %>
+          </div>
+          <div class="col-auto d-flex align-items-end">
+            <%= form.submit "Filter", class: "btn btn-primary" %>
+            <%= link_to "Clear Filter", admin_dashboard_path, class: "btn btn-secondary ms-2" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- Reservations Table -->
+    <h2 class="mb-3">Upcoming Reservations</h2>
+    <% if @reservations.any? %>
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Number of People</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reservations.each do |reservation| %>
+            <tr>
+              <td><%= reservation.user.name %></td>
+              <td><%= reservation.time_slot.date %></td>
+              <td><%= reservation.time_slot.start_time.strftime("%I:%M %p") %> - <%= reservation.time_slot.end_time.strftime("%I:%M %p") %></td>
+              <td><%= reservation.number_of_people %></td>
+              <td>
+                <div class="d-flex justify-content-center gap-2">
+                  <%= link_to "Contact", contact_admin_reservation_path(reservation), class: "btn btn-warning btn-sm" %>
+                  <%= button_to "Cancel", reservation_path(reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-center">No upcoming reservations.</p>
+    <% end %>
+    <div class="text-center mb-4">
+      <div class="d-flex justify-content-center gap-3">
+        <!-- Calendar Link -->
+        <%= link_to "View Reservation Calendar", admin_calendar_path, class: "btn btn-dark btn-lg" %>
+        <!-- Time Slots Link -->
+        <%= link_to "Time Slots", admin_time_slots_path, class: "btn btn-dark btn-lg" %>
+        <!-- Add a new time slot -->
+        <%= link_to "Add New Time Slot", new_admin_time_slot_path, class: "btn btn-dark btn-lg" %>
+      </div>
+    </div>
+  </div>
+</div>
