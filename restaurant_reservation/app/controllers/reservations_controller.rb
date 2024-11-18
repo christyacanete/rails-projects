@@ -15,7 +15,7 @@ class ReservationsController < ApplicationController
   def create
     @reservation = current_user.reservations.build(reservation_params)
     if @reservation.save
-      ReservationMailer.confirmation_email(@reservation).deliver_now
+      #ReservationMailer.confirmation_email(@reservation).deliver_now
       flash[:success] = "Reservation confirmed! A confirmation email has been sent."
       redirect_to reservations_path # This will take the user to the dashboard (reservation list)
     else
@@ -44,7 +44,7 @@ class ReservationsController < ApplicationController
     end
 
     # Send cancellation email
-    ReservationMailer.cancellation_email(reservation).deliver_now
+    #ReservationMailer.cancellation_email(reservation).deliver_now
 
     # Destroy the reservation
     reservation.destroy
